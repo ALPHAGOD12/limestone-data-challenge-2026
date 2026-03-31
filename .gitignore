@@ -1,0 +1,66 @@
+# Data files
+*.csv
+!modelling_prices.submission.2.csv
+
+# Extracted images (not for repo - curated images are in docs/)
+/images/
+_p2_plots/
+_p2_fixed_plots/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Internal/temp scripts (prefixed with _)
+_*.py
+
+# Build/update scripts
+build_*.py
+update_*.py
+fix_*.py
+
+# Analysis/verification scripts (exploratory, not final)
+analyze_*.py
+verify_*.py
+check_*.py
+test_*.py
+tune_*.py
+diagnose_*.py
+decompose_*.py
+compare_*.py
+fit_chosen_fft.py
+
+# Non-final solution files
+solution_problem1.py
+solution_problem3.py
+
+# Intermediate/draft notebooks
+limestone_data_challenge_solutions.ipynb
+submission.ipynb
+submission_executed.ipynb
+submission_alt.ipynb
+
+# Duplicate executed notebooks (keep only the main executed ones)
+final_notebook_alt.ipynb
+
+# Validation scripts (kept: validate_problem2.py)
+validate_prediction.py
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
