@@ -1,6 +1,6 @@
 # Limestone Data Challenge 2026
 
-**2nd Place Finish**
+**2nd Place Finish out of 200+**
 
 A systematic approach to a multi-part data challenge involving price prediction, imputation, and trading strategy optimization on a dataset of 53 flour-price columns over 3,650 days (~10 years) with ~49% missing values.
 
