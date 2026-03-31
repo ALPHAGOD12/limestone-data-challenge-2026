@@ -43,7 +43,7 @@ INDEX_COEFS = {
 
 _col_means = np.nanmean(_data, axis=0)
 _MIN_COEF = 0.05
-_BID_MARGIN = 1.0
+_BID_MARGIN = 0.0
 
 print("Problem 5: Computing market levels and deviations...")
 _market_level = np.zeros(_n_rows)

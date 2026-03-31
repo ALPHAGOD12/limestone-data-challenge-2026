@@ -14,6 +14,26 @@ The dataset contains 53 columns (`col_00` through `col_52`) representing daily f
 | **4** | Arbitrage: buy cheap hidden, sell to index columns | Profit capture rate |
 | **5** | Place limit orders on hidden columns | Score efficiency vs oracle |
 
+### Dataset at a Glance
+
+**Missing data heatmap** — red cells are NaN, green are observed. The ~49% missingness is spread unevenly across columns and time:
+
+<p align="center">
+  <img src="docs/images/nan_heatmap.png" width="90%"/>
+</p>
+
+**Market level over time** — the row-wise mean of all observed prices on each day reveals a clear shared upward trend across all 53 columns:
+
+<p align="center">
+  <img src="docs/images/market_level.png" width="90%"/>
+</p>
+
+**Deviation distribution** — after subtracting the market level, per-column deviations are tightly centered near zero (σ ≈ 10), which makes them far easier to predict than raw prices (~150–170):
+
+<p align="center">
+  <img src="docs/images/deviation_distribution.png" width="70%"/>
+</p>
+
 ---
 
 ## Problem 1: Index Classification & Coefficient Estimation
@@ -36,6 +56,12 @@ col_j ≈ w₁·col₀ + w₂·col₁ + ... + w₅₂·col₅₂    (wᵢ ≥ 0)
 We use NNLS (not OLS) because index weights are non-negative by construction — a real price index can't have negative contributions.
 
 Since the data has ~49% NaN, we first create a complete "proxy" dataset via linear interpolation + forward/backward fill. This is a rough fill, but sufficient for identification — the R² signal from true indices is so strong (~0.99) that imputation noise doesn't mask it.
+
+**NNLS R² for each column** — the 6 red bars are the identified indices, clearly separated from farmers:
+
+<p align="center">
+  <img src="docs/images/nnls_r2_barplot.png" width="90%"/>
+</p>
 
 **Result:** 6 columns showed R² ≈ 0.99: `col_11, col_30, col_42, col_46, col_48, col_50` — these are the **indices**. The remaining 47 are **farmers**.
 
@@ -73,7 +99,37 @@ The final weights are fitted via NNLS on raw overlap rows using the validated co
 
 ### Analysis Plots
 
-**Index formula inspection — predicted vs actual for each index:**
+**Greedy sparse-formula fit — predicted vs actual for each index (time-domain constituents):**
+
+<p align="center">
+  <img src="docs/images/sparse_fit_col_11.png" width="45%"/>
+  <img src="docs/images/sparse_fit_col_30.png" width="45%"/>
+</p>
+<p align="center">
+  <img src="docs/images/sparse_fit_col_42.png" width="45%"/>
+  <img src="docs/images/sparse_fit_col_46.png" width="45%"/>
+</p>
+<p align="center">
+  <img src="docs/images/sparse_fit_col_48.png" width="45%"/>
+  <img src="docs/images/sparse_fit_col_50.png" width="45%"/>
+</p>
+
+**Sparse-formula residuals — confirming near-zero reconstruction error:**
+
+<p align="center">
+  <img src="docs/images/sparse_residual_col_11.png" width="45%"/>
+  <img src="docs/images/sparse_residual_col_30.png" width="45%"/>
+</p>
+<p align="center">
+  <img src="docs/images/sparse_residual_col_42.png" width="45%"/>
+  <img src="docs/images/sparse_residual_col_46.png" width="45%"/>
+</p>
+<p align="center">
+  <img src="docs/images/sparse_residual_col_48.png" width="45%"/>
+  <img src="docs/images/sparse_residual_col_50.png" width="45%"/>
+</p>
+
+**Final formula inspection — T2 coefficients predicted vs actual:**
 
 <p align="center">
   <img src="docs/images/index_formula_col_11.png" width="45%"/>
@@ -88,11 +144,18 @@ The final weights are fitted via NNLS on raw overlap rows using the validated co
   <img src="docs/images/index_formula_col_50.png" width="45%"/>
 </p>
 
-**Residual analysis — confirming near-zero reconstruction error:**
+**Index residuals — near-zero residuals confirm the formula accuracy:**
 
 <p align="center">
   <img src="docs/images/index_residual_col_11.png" width="45%"/>
   <img src="docs/images/index_residual_col_30.png" width="45%"/>
+</p>
+
+**T2 cross-validation — comparing time-domain and frequency-domain constituent weights:**
+
+<p align="center">
+  <img src="docs/images/t2_comparison_col_11.png" width="45%"/>
+  <img src="docs/images/t2_comparison_col_30.png" width="45%"/>
 </p>
 
 ---
@@ -137,9 +200,27 @@ deviation[row, col] = price[row, col] − market_level[row]
 
 Also compute per-column mean deviation (each column's long-run average offset from market) and gap lengths (consecutive NaN count per cell).
 
+**Shared market trend estimation across all 53 columns:**
+
+<p align="center">
+  <img src="docs/images/shared_trend_estimation.png" width="80%"/>
+</p>
+
+**Detrended time series (after removing shared trend) — isolating column-specific deviations:**
+
+<p align="center">
+  <img src="docs/images/detrended_col_00.png" width="80%"/>
+</p>
+
 #### Step 2: Temporal Features + Time
 
 Build rolling-window features (windows of 1, 2, 3, 5, 7 rows) to capture local temporal patterns. Add normalized time (row_index / n_rows × 6.4) as a KNN feature so neighbors are close in time, not just in value — important over a 10-year dataset with trending prices.
+
+**Periodic structure in farmer columns** — motivating the use of temporal features:
+
+<p align="center">
+  <img src="docs/images/raw_periodic_columns.png" width="80%"/>
+</p>
 
 #### Step 3: KNN Ensemble
 
@@ -178,20 +259,14 @@ Fill any remaining NaN with column means, clip to ≥ 0, verify observed values 
 
 ### Analysis Plots
 
-**Periodic structure in farmer columns (motivating temporal features):**
-
-<p align="center">
-  <img src="docs/images/raw_periodic_columns.png" width="80%"/>
-</p>
-
-**Problem 2 imputation mechanism breakdown:**
+**Imputation mechanism breakdown — what fraction of fills came from each method:**
 
 <p align="center">
   <img src="docs/images/p2_mechanism_breakdown.png" width="45%"/>
   <img src="docs/images/p2_mechanism_detail.png" width="45%"/>
 </p>
 
-**Periodic prefill diagnostics:**
+**Periodic prefill diagnostics — validating the periodic component extraction:**
 
 <p align="center">
   <img src="docs/images/p2_periodic_prefill.png" width="45%"/>
@@ -250,7 +325,17 @@ Where `tw = max(0.77^gap, 0.05)`:
 - **gap = 10**: tw = 0.07 → trust cross-sectional
 - **gap = 20+**: tw = 0.05 → capped (stale temporal still worth 5%)
 
-The 0.77 base matches the **lag-1 autocorrelation** measured in the deviation series, so the weight decay mirrors the actual loss of predictive power.
+**Temporal weight decay curve** — the 0.77 base matches the lag-1 autocorrelation of the deviation series, giving a ~3-day half-life:
+
+<p align="center">
+  <img src="docs/images/temporal_weight_decay.png" width="60%"/>
+</p>
+
+**Deviation autocorrelation by lag** — lag-1 ≈ 0.77 across columns, validating the decay base:
+
+<p align="center">
+  <img src="docs/images/deviation_autocorrelation.png" width="90%"/>
+</p>
 
 **Cross-sectional models:** ~2,500 pairwise linear regressions `dev[i] ≈ slope × dev[j] + intercept`, R²-weighted at prediction time.
 
@@ -346,25 +431,13 @@ Sweeping margin from 0 to +5:
 
 ## Exploratory Analysis
 
-Before arriving at the final solutions, extensive analysis was performed:
+Additional exploratory analysis from the notebook:
 
-**Shared market trend across all columns:**
-
-<p align="center">
-  <img src="docs/images/shared_trend_estimation.png" width="80%"/>
-</p>
-
-**Detrended time series (after removing shared trend):**
+**Global intrinsic value curve** — fitting a polynomial trend to capture the non-linear upward drift shared across all columns:
 
 <p align="center">
-  <img src="docs/images/detrended_col_00.png" width="80%"/>
-</p>
-
-**Cross-validation of index formulas (T2 comparison):**
-
-<p align="center">
-  <img src="docs/images/t2_comparison_col_11.png" width="45%"/>
-  <img src="docs/images/t2_comparison_col_30.png" width="45%"/>
+  <img src="docs/images/intrinsic_curve_0.png" width="45%"/>
+  <img src="docs/images/intrinsic_curve_1.png" width="45%"/>
 </p>
 
 ---
@@ -380,9 +453,9 @@ Before arriving at the final solutions, extensive analysis was performed:
 ├── solution_problem5.py               # Problem 5: Limit order trading
 ├── validate_problem2.py               # Problem 2: Independent validation
 ├── final_notebook.ipynb               # Full analysis notebook with plots
-├── final_notebook_executed.ipynb       # Pre-executed version
+├── final_notebook_executed.ipynb       # Pre-executed version (all outputs)
 └── docs/
-    └── images/                        # Curated analysis plots for README
+    └── images/                        # Analysis plots for README
 ```
 
 ## Tech Stack
@@ -391,6 +464,7 @@ Before arriving at the final solutions, extensive analysis was performed:
 - **NumPy / Pandas** — data manipulation
 - **SciPy** — NNLS regression, FFT, Lomb-Scargle periodogram
 - **scikit-learn** — KNNImputer
+- **Matplotlib** — all plots and visualizations
 
 ## Running
 
