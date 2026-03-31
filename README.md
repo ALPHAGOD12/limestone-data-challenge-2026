@@ -73,9 +73,6 @@ The final weights are fitted via NNLS on raw overlap rows using the validated co
 
 ### Analysis Plots
 
-<details>
-<summary>Click to expand: Index formula fit plots</summary>
-
 **Index formula inspection — predicted vs actual for each index:**
 
 <p align="center">
@@ -97,8 +94,6 @@ The final weights are fitted via NNLS on raw overlap rows using the validated co
   <img src="docs/images/index_residual_col_11.png" width="45%"/>
   <img src="docs/images/index_residual_col_30.png" width="45%"/>
 </p>
-
-</details>
 
 ---
 
@@ -183,9 +178,6 @@ Fill any remaining NaN with column means, clip to ≥ 0, verify observed values 
 
 ### Analysis Plots
 
-<details>
-<summary>Click to expand: Imputation analysis plots</summary>
-
 **Periodic structure in farmer columns (motivating temporal features):**
 
 <p align="center">
@@ -199,6 +191,13 @@ Fill any remaining NaN with column means, clip to ≥ 0, verify observed values 
   <img src="docs/images/p2_mechanism_detail.png" width="45%"/>
 </p>
 
+**Periodic prefill diagnostics:**
+
+<p align="center">
+  <img src="docs/images/p2_periodic_prefill.png" width="45%"/>
+  <img src="docs/images/p2_periodic_residual.png" width="45%"/>
+</p>
+
 **Imputed time series — sample columns (blue dots = observed, orange = imputed):**
 
 <p align="center">
@@ -209,8 +208,6 @@ Fill any remaining NaN with column means, clip to ≥ 0, verify observed values 
   <img src="docs/images/p2_imputed_col_34.png" width="45%"/>
   <img src="docs/images/p2_imputed_col_52.png" width="45%"/>
 </p>
-
-</details>
 
 ---
 
@@ -351,9 +348,6 @@ Sweeping margin from 0 to +5:
 
 Before arriving at the final solutions, extensive analysis was performed:
 
-<details>
-<summary>Click to expand: Exploratory plots</summary>
-
 **Shared market trend across all columns:**
 
 <p align="center">
@@ -372,8 +366,6 @@ Before arriving at the final solutions, extensive analysis was performed:
   <img src="docs/images/t2_comparison_col_11.png" width="45%"/>
   <img src="docs/images/t2_comparison_col_30.png" width="45%"/>
 </p>
-
-</details>
 
 ---
 
