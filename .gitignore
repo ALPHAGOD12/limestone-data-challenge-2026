@@ -48,8 +48,12 @@ submission.ipynb
 submission_executed.ipynb
 submission_alt.ipynb
 
-# Duplicate executed notebooks (keep only the main executed ones)
+# Alt approach files
+alt_approach/
 final_notebook_alt.ipynb
+final_notebook_alt_executed.ipynb
+submission_alt.ipynb
+submission_alt_executed.ipynb
 
 # Validation scripts (kept: validate_problem2.py)
 validate_prediction.py

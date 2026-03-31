@@ -389,14 +389,8 @@ Before arriving at the final solutions, extensive analysis was performed:
 ├── validate_problem2.py               # Problem 2: Independent validation
 ├── final_notebook.ipynb               # Full analysis notebook with plots
 ├── final_notebook_executed.ipynb       # Pre-executed version
-├── docs/
-│   └── images/                        # Curated analysis plots for README
-└── alt_approach/                      # Alternative 7-farmer/46-index approach
-    ├── solution_problem1_alt.py
-    ├── solution_problem2_alt.py
-    ├── solution_problem3_alt.py
-    ├── solution_problem4_alt.py
-    └── solution_problem5_alt.py
+└── docs/
+    └── images/                        # Curated analysis plots for README
 ```
 
 ## Tech Stack
