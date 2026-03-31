@@ -18,15 +18,15 @@ The dataset contains 53 columns (`col_00` through `col_52`) representing daily f
 
 **Missing data heatmap** — red cells are NaN, green are observed. The ~49% missingness is spread unevenly across columns and time:
 
-![NaN Heatmap](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/nan_heatmap.png)
+![NaN Heatmap](./docs/images/nan_heatmap.png)
 
 **Market level over time** — the row-wise mean of all observed prices on each day reveals a clear shared upward trend across all 53 columns:
 
-![Market Level](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/market_level.png)
+![Market Level](./docs/images/market_level.png)
 
 **Deviation distribution** — after subtracting the market level, per-column deviations are tightly centered near zero (σ ≈ 10), which makes them far easier to predict than raw prices (~150–170):
 
-![Deviation Distribution](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/deviation_distribution.png)
+![Deviation Distribution](./docs/images/deviation_distribution.png)
 
 ---
 
@@ -53,7 +53,7 @@ Since the data has ~49% NaN, we first create a complete "proxy" dataset via line
 
 **NNLS R² for each column** — the 6 red bars are the identified indices, clearly separated from farmers:
 
-![NNLS R² Bar Plot](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/nnls_r2_barplot.png)
+![NNLS R² Bar Plot](./docs/images/nnls_r2_barplot.png)
 
 **Result:** 6 columns showed R² ≈ 0.99: `col_11, col_30, col_42, col_46, col_48, col_50` — these are the **indices**. The remaining 47 are **farmers**.
 
@@ -93,40 +93,40 @@ The final weights are fitted via NNLS on raw overlap rows using the validated co
 
 **Greedy sparse-formula fit — predicted vs actual for each index (time-domain constituents):**
 
-![Sparse Fit col_11](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/sparse_fit_col_11.png)
-![Sparse Fit col_30](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/sparse_fit_col_30.png)
-![Sparse Fit col_42](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/sparse_fit_col_42.png)
-![Sparse Fit col_46](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/sparse_fit_col_46.png)
-![Sparse Fit col_48](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/sparse_fit_col_48.png)
-![Sparse Fit col_50](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/sparse_fit_col_50.png)
+![Sparse Fit col_11](./docs/images/sparse_fit_col_11.png)
+![Sparse Fit col_30](./docs/images/sparse_fit_col_30.png)
+![Sparse Fit col_42](./docs/images/sparse_fit_col_42.png)
+![Sparse Fit col_46](./docs/images/sparse_fit_col_46.png)
+![Sparse Fit col_48](./docs/images/sparse_fit_col_48.png)
+![Sparse Fit col_50](./docs/images/sparse_fit_col_50.png)
 
 **Sparse-formula residuals — confirming near-zero reconstruction error:**
 
-![Sparse Residual col_11](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/sparse_residual_col_11.png)
-![Sparse Residual col_30](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/sparse_residual_col_30.png)
-![Sparse Residual col_42](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/sparse_residual_col_42.png)
-![Sparse Residual col_46](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/sparse_residual_col_46.png)
-![Sparse Residual col_48](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/sparse_residual_col_48.png)
-![Sparse Residual col_50](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/sparse_residual_col_50.png)
+![Sparse Residual col_11](./docs/images/sparse_residual_col_11.png)
+![Sparse Residual col_30](./docs/images/sparse_residual_col_30.png)
+![Sparse Residual col_42](./docs/images/sparse_residual_col_42.png)
+![Sparse Residual col_46](./docs/images/sparse_residual_col_46.png)
+![Sparse Residual col_48](./docs/images/sparse_residual_col_48.png)
+![Sparse Residual col_50](./docs/images/sparse_residual_col_50.png)
 
 **Final formula inspection — T2 coefficients predicted vs actual:**
 
-![T2 Formula col_11](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/index_formula_col_11.png)
-![T2 Formula col_30](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/index_formula_col_30.png)
-![T2 Formula col_42](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/index_formula_col_42.png)
-![T2 Formula col_46](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/index_formula_col_46.png)
-![T2 Formula col_48](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/index_formula_col_48.png)
-![T2 Formula col_50](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/index_formula_col_50.png)
+![T2 Formula col_11](./docs/images/index_formula_col_11.png)
+![T2 Formula col_30](./docs/images/index_formula_col_30.png)
+![T2 Formula col_42](./docs/images/index_formula_col_42.png)
+![T2 Formula col_46](./docs/images/index_formula_col_46.png)
+![T2 Formula col_48](./docs/images/index_formula_col_48.png)
+![T2 Formula col_50](./docs/images/index_formula_col_50.png)
 
 **Index residuals — near-zero residuals confirm the formula accuracy:**
 
-![Index Residual col_11](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/index_residual_col_11.png)
-![Index Residual col_30](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/index_residual_col_30.png)
+![Index Residual col_11](./docs/images/index_residual_col_11.png)
+![Index Residual col_30](./docs/images/index_residual_col_30.png)
 
 **T2 cross-validation — comparing time-domain and frequency-domain constituent weights:**
 
-![T2 Comparison col_11](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/t2_comparison_col_11.png)
-![T2 Comparison col_30](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/t2_comparison_col_30.png)
+![T2 Comparison col_11](./docs/images/t2_comparison_col_11.png)
+![T2 Comparison col_30](./docs/images/t2_comparison_col_30.png)
 
 ---
 
@@ -172,11 +172,11 @@ Also compute per-column mean deviation (each column's long-run average offset fr
 
 **Shared market trend estimation across all 53 columns:**
 
-![Shared Trend Estimation](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/shared_trend_estimation.png)
+![Shared Trend Estimation](./docs/images/shared_trend_estimation.png)
 
 **Detrended time series (after removing shared trend) — isolating column-specific deviations:**
 
-![Detrended col_00](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/detrended_col_00.png)
+![Detrended col_00](./docs/images/detrended_col_00.png)
 
 #### Step 2: Temporal Features + Time
 
@@ -184,7 +184,7 @@ Build rolling-window features (windows of 1, 2, 3, 5, 7 rows) to capture local t
 
 **Periodic structure in farmer columns** — motivating the use of temporal features:
 
-![Periodic Columns](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/raw_periodic_columns.png)
+![Periodic Columns](./docs/images/raw_periodic_columns.png)
 
 #### Step 3: KNN Ensemble
 
@@ -225,20 +225,20 @@ Fill any remaining NaN with column means, clip to ≥ 0, verify observed values 
 
 **Imputation mechanism breakdown — what fraction of fills came from each method:**
 
-![Mechanism Breakdown](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/p2_mechanism_breakdown.png)
-![Mechanism Detail](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/p2_mechanism_detail.png)
+![Mechanism Breakdown](./docs/images/p2_mechanism_breakdown.png)
+![Mechanism Detail](./docs/images/p2_mechanism_detail.png)
 
 **Periodic prefill diagnostics — validating the periodic component extraction:**
 
-![Periodic Prefill](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/p2_periodic_prefill.png)
-![Periodic Residual](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/p2_periodic_residual.png)
+![Periodic Prefill](./docs/images/p2_periodic_prefill.png)
+![Periodic Residual](./docs/images/p2_periodic_residual.png)
 
 **Imputed time series — sample columns (blue dots = observed, orange = imputed):**
 
-![Imputed col_00](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/p2_imputed_col_00.png)
-![Imputed col_24](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/p2_imputed_col_24.png)
-![Imputed col_34](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/p2_imputed_col_34.png)
-![Imputed col_52](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/p2_imputed_col_52.png)
+![Imputed col_00](./docs/images/p2_imputed_col_00.png)
+![Imputed col_24](./docs/images/p2_imputed_col_24.png)
+![Imputed col_34](./docs/images/p2_imputed_col_34.png)
+![Imputed col_52](./docs/images/p2_imputed_col_52.png)
 
 ---
 
@@ -283,11 +283,11 @@ Where `tw = max(0.77^gap, 0.05)`:
 
 **Temporal weight decay curve** — the 0.77 base matches the lag-1 autocorrelation of the deviation series, giving a ~3-day half-life:
 
-![Temporal Weight Decay](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/temporal_weight_decay.png)
+![Temporal Weight Decay](./docs/images/temporal_weight_decay.png)
 
 **Deviation autocorrelation by lag** — lag-1 ≈ 0.77 across columns, validating the decay base:
 
-![Deviation Autocorrelation](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/deviation_autocorrelation.png)
+![Deviation Autocorrelation](./docs/images/deviation_autocorrelation.png)
 
 **Cross-sectional models:** ~2,500 pairwise linear regressions `dev[i] ≈ slope × dev[j] + intercept`, R²-weighted at prediction time.
 
@@ -387,8 +387,8 @@ Additional exploratory analysis from the notebook:
 
 **Global intrinsic value curve** — fitting a polynomial trend to capture the non-linear upward drift shared across all columns:
 
-![Intrinsic Curve Fit](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/intrinsic_curve_0.png)
-![Intrinsic Curve Residuals](https://raw.githubusercontent.com/ALPHAGOD12/limestone-data-challenge-2026/main/docs/images/intrinsic_curve_1.png)
+![Intrinsic Curve Fit](./docs/images/intrinsic_curve_0.png)
+![Intrinsic Curve Residuals](./docs/images/intrinsic_curve_1.png)
 
 ---
 
